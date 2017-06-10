@@ -5,42 +5,53 @@ const server = new Hapi.Server();
 const GIFEncoder = require('gifencoder');
 const pngFileStream = require('png-file-stream');
 const fs = require('fs');
+const glob = require("glob");
+
+function gera(){
+
+    let encoder = new GIFEncoder(320, 240);
+
+    pngFileStream('../public/img/*.png')
+    .pipe(encoder.createWriteStream({ repeat: -1, delay: 100, quality: 10 }))
+    .pipe(fs.createWriteStream('../web/final.gif'));
+
+}
+ 
+apaga();
+function apaga(){
+    glob("../public/img/*.png",function(err,files){
+        if (err) throw err;
+
+        files.forEach(function(item,index,array){
+            fs.unlink(item, function(err){
+                if (err) throw err;
+            });
+        });
+    });
+}
 
 server.connection({
     host:  '0.0.0.0',
     port: (process.env.PORT || 3000)
 });
 
-server.route({
-    method: 'GET',
-    path:'/teste',
-    handler:  (request, reply) =>  {
-        return reply('sdasdasds').code(200);
-    }
-});
+function gravaImgBase64Data( data ){
 
-server.start((err) => {
-    if (err) throw err;
-    console.log('Server running at:', server.info.uri);
-});
+    let img = Date.now();
+    let base64Data = data.replace(/^data:image\/png;base64,/, "");
+    fs.writeFile("../public/img/"+img+".png", base64Data, 'base64', (err) => {
+        if( err ) console.log(err);
+    });
 
+}
 
 server.route({
     method: 'POST',
     path:'/gif',
     handler:  (request, reply) =>  {
 
-        datas.forEach(   (data, index) =>{
-
-            let base64Data = data.replace(/^data:image\/png;base64,/, "");
-
-            fs.writeFile("/public/test/out"+index+".png", base64Data, 'base64', (err) => {
-                console.log(err);
-
-                return reply().code(200);
-            });
-
-        })
+        gera();
+        return reply('foi').code(200);
 
     }
 });
@@ -50,12 +61,14 @@ server.route({
     path:'/img',
     handler:  (request, reply) =>  {
 
-        let img = Date.now();
-        let base64Data = request.payload.data.replace(/^data:image\/png;base64,/, "");
-        fs.writeFile("../public/test/out-"+img+".png", base64Data, 'base64', (err) => {
-            if( err ) console.log(err);
-            return reply(img).code(200);
-        });
+        gravaImgBase64Data( request.payload.data )
+        return reply('foi').code(200);
+
 
     }
+});
+
+server.start((err) => {
+    if (err) throw err;
+    console.log('Server running at:', server.info.uri);
 });

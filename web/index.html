@@ -58,6 +58,23 @@
         position: absolute;
     }
 
+    #final-gif{
+        border: 1px solid #000;
+        position: absolute;
+        left: 330px;
+        top: 320px;
+        width: 320px;
+        height: 240px;
+    }
+
+    #final-gif img{
+        display: inline-block;
+        vertical-align: top;
+        width: 320px;
+        height: auto;
+    }
+
+
     </style>
 </head>
 <body>
@@ -70,6 +87,11 @@
     <video id="video" width="320" height="240" autoplay></video>
 
     <canvas id="canvas" width="320" height="240"></canvas>
+
+    <div class="" id="final-gif">
+        <img src="final.gif" alt="" dynsrc="final.gif"  loop="-1">
+    </div>
+
     <div class="" id="img-gif">
 
     </div>

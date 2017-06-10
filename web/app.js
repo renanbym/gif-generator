@@ -50,19 +50,31 @@ function getPicture() {
 var i = 0;
 var interval;
 function foto(){
-    if(i < 4) {
+    if(i < 50) {
         appendImage();
-
-
         i++;
     }else{
-
-
-
+            geraGif( );
         window.clearInterval(interval);
     }
 }
 
+function geraGif( ){
+
+    $.ajax({
+        method: "POST",
+        url: "http://localhost:3000/gif"
+    })
+
+    $('#final-gif img').show().each(function() {
+        this.offsetHeight;
+    }).prop('src', 'final.gif');
+
+}
+
+$("#final-gif").click(function() {
+  $("#final-gif").find('img').attr("src", "final.gif?v="+Date.now());
+});
 
 function saveImg( data_gif ){
 
