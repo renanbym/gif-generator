@@ -1,11 +1,14 @@
+const request = require('request');
 const Hapi = require('hapi');
 const server = new Hapi.Server();
+const config = require('../config.json');
 
 
 const GIFEncoder = require('gifencoder');
 const pngFileStream = require('png-file-stream');
 const fs = require('fs');
 const glob = require("glob");
+const Path = require('path');
 
 function gera(){
 
@@ -16,6 +19,31 @@ function gera(){
     .pipe(fs.createWriteStream('../web/public/final.gif'));
 
 }
+
+
+function shareGiphyAPI(){
+
+    request({
+        uri: 'http://upload.giphy.com/v1/gifs',
+        method: 'POST',
+        qs: {
+            username: config.user,
+            api_key: config.giphy,
+            file: Path.join(__dirname, '../', 'web/public/final.gif'),
+            source_image_url: 'http://gif-generator-f2f.herokuapp.com/public/final.gif',
+            tags: 'f2f,f2f-gifgenerator,gifgenerator'
+        }
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.error(response.body);
+        } else {
+            console.error(response.body);
+        }
+    });
+}
+
+shareGiphyAPI();
+
 
 apaga();
 function apaga(){
@@ -49,10 +77,8 @@ server.route({
     method: 'POST',
     path:'/gif',
     handler:  (request, reply) =>  {
-
         gera();
         return reply('foi').code(200);
-
     }
 });
 
@@ -60,11 +86,8 @@ server.route({
     method: 'POST',
     path:'/img',
     handler:  (request, reply) =>  {
-
         gravaImgBase64Data( request.payload.data )
         return reply('foi').code(200);
-
-
     }
 });
 
