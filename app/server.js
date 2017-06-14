@@ -42,7 +42,6 @@ function shareGiphyAPI(){
     });
 }
 
-shareGiphyAPI();
 
 
 apaga();
