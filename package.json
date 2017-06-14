@@ -1,31 +1,35 @@
 {
-  "name": "toten-foto-fb",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "babel": "^6.23.0",
-    "gifencoder": "^1.0.6",
-    "hapi": "^16.4.3",
-    "png-file-stream": "^1.0.0",
-    "vue": "^2.3.4"
-  },
-  "devDependencies": {
-    "babel-core": "^6.1.2",
-    "babel-loader": "^6.1.0",
-    "babel-plugin-transform-runtime": "^6.1.2",
-    "babel-preset-es2015": "^6.1.2",
-    "babel-preset-stage-0": "^6.1.2",
-    "babel-runtime": "^5.8.0",
-    "webpack": "^1.12.2",
-    "css-loader": "^0.23.0",
-    "style-loader": "^0.13.0",
-    "vue-loader": "^7.3.0",
-    "vue-html-loader": "^1.0.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+    "name": "toten-foto-fb",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "engines": {
+        "node": "6.2.1"
+    },
+    "dependencies": {
+        "babel": "^6.23.0",
+        "gifencoder": "^1.0.6",
+        "hapi": "^16.4.3",
+        "png-file-stream": "^1.0.0",
+        "vue": "^2.3.4"
+    },
+    "devDependencies": {
+        "babel-core": "^6.1.2",
+        "babel-loader": "^6.1.0",
+        "babel-plugin-transform-runtime": "^6.1.2",
+        "babel-preset-es2015": "^6.1.2",
+        "babel-preset-stage-0": "^6.1.2",
+        "babel-runtime": "^5.8.0",
+        "webpack": "^1.12.2",
+        "css-loader": "^0.23.0",
+        "style-loader": "^0.13.0",
+        "vue-loader": "^7.3.0",
+        "vue-html-loader": "^1.0.0"
+    },
+    "scripts": {
+        "build": "npm install",
+        "start": "node server.js"
+    },
+    "author": "",
+    "license": "ISC"
 }
