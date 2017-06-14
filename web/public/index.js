@@ -63,7 +63,7 @@ function geraGif( ){
 
     $.ajax({
         method: "POST",
-        url: "http://localhost:3000/gif"
+        url: "http://localhost:3001/gif"
     })
 
     $('#final-gif img').show().each(function() {
@@ -80,7 +80,7 @@ function saveImg( data_gif ){
 
     $.ajax({
         method: "POST",
-        url: "http://localhost:3000/img",
+        url: "http://localhost:3001/img",
         data: { data: data_gif }
     })
     .done(function( msg ) {
