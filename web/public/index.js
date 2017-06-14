@@ -68,12 +68,12 @@ function geraGif( ){
 
     $('#final-gif img').show().each(function() {
         this.offsetHeight;
-    }).prop('src', 'final.gif');
+    }).prop('src', 'public/final.gif');
 
 }
 
 $("#final-gif").click(function() {
-  $("#final-gif").find('img').attr("src", "final.gif?v="+Date.now());
+  $("#final-gif").find('img').attr("src", "public/final.gif?v="+Date.now());
 });
 
 function saveImg( data_gif ){

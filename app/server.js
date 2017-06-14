@@ -13,10 +13,10 @@ function gera(){
 
     pngFileStream('../public/img/*.png')
     .pipe(encoder.createWriteStream({ repeat: -1, delay: 100, quality: 10 }))
-    .pipe(fs.createWriteStream('../web/final.gif'));
+    .pipe(fs.createWriteStream('../web/public/final.gif'));
 
 }
- 
+
 apaga();
 function apaga(){
     glob("../public/img/*.png",function(err,files){
