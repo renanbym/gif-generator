@@ -14,9 +14,21 @@ function gera(){
 
     let encoder = new GIFEncoder(320, 240);
 
+    glob("../public/img/*.png", (err,files) => {
+        if (err) throw err;
+        files.reverse().map( (c) => {
+            console.log(c);
+            //     var inStr = fs.createReadStream('/your/path/to/file');
+            //     var outStr = fs.createWriteStream('/your/path/to/destination');
+            //     inStr.pipe(outStr);
+        })
+    });
+
     pngFileStream('../public/img/*.png')
     .pipe(encoder.createWriteStream({ repeat: -1, delay: 100, quality: 10 }))
     .pipe(fs.createWriteStream('../web/public/final.gif'));
+
+
 
 }
 
@@ -33,7 +45,7 @@ function shareGiphyAPI(){
             source_image_url: 'http://gif-generator-f2f.herokuapp.com/public/final.gif',
             tags: 'f2f,f2f-gifgenerator,gifgenerator'
         }
-    }, function (error, response, body) {
+    },  (error, response, body) => {
         if (!error && response.statusCode == 200) {
             console.error(response.body);
         } else {
@@ -46,11 +58,11 @@ function shareGiphyAPI(){
 
 apaga();
 function apaga(){
-    glob("../public/img/*.png",function(err,files){
+    glob("../public/img/*.png", (err,files) => {
         if (err) throw err;
 
-        files.forEach(function(item,index,array){
-            fs.unlink(item, function(err){
+        files.forEach( (item,index,array) => {
+            fs.unlink(item, (err) => {
                 if (err) throw err;
             });
         });
