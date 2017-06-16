@@ -10,28 +10,43 @@ const fs = require('fs');
 const glob = require("glob");
 const Path = require('path');
 
+
+const Public = Path.join(__dirname, '../public/');
+
 function gera(){
 
     let encoder = new GIFEncoder(320, 240);
 
-    glob("../public/img/*.png", (err,files) => {
+    glob( Public+"img/*.png", (err,files) => {
         if (err) throw err;
+
+        console.log(files);
+        let i = 1;
         files.reverse().map( (c) => {
             console.log(c);
-            //     var inStr = fs.createReadStream('/your/path/to/file');
-            //     var outStr = fs.createWriteStream('/your/path/to/destination');
-            //     inStr.pipe(outStr);
+            fs.createReadStream(c).pipe(fs.createWriteStream( Public+'reverse/'+i+'.png'));
+            i++;
         })
     });
 
-    pngFileStream('../public/img/*.png')
+    pngFileStream( Public+'img/*.png')
     .pipe(encoder.createWriteStream({ repeat: -1, delay: 100, quality: 10 }))
-    .pipe(fs.createWriteStream('../web/public/final.gif'));
+    .pipe(fs.createWriteStream( Public+'final-1.gif') );
+
+    pngFileStream( Public+'reverse/*.png')
+    .pipe(encoder.createWriteStream({ repeat: -1, delay: 100, quality: 10 }))
+    .pipe(fs.createWriteStream( Public+'final-2.gif') );
+
+    pngFileStream( Public+'img/*.png')
+    pngFileStream( Public+'reverse/*.png')
+    .pipe(encoder.createWriteStream({ repeat: -1, delay: 100, quality: 10 }))
+    .pipe(fs.createWriteStream( Public+'final.gif') );
 
 
 
 }
 
+gera();
 
 function shareGiphyAPI(){
 
@@ -56,9 +71,18 @@ function shareGiphyAPI(){
 
 
 
-apaga();
+// apaga();
 function apaga(){
     glob("../public/img/*.png", (err,files) => {
+        if (err) throw err;
+
+        files.forEach( (item,index,array) => {
+            fs.unlink(item, (err) => {
+                if (err) throw err;
+            });
+        });
+    });
+    glob("../public/reverse/*.png", (err,files) => {
         if (err) throw err;
 
         files.forEach( (item,index,array) => {
@@ -71,7 +95,7 @@ function apaga(){
 
 server.connection({
     host:  '0.0.0.0',
-    port: 3001
+    port: 3003
 });
 
 function gravaImgBase64Data( data ){
